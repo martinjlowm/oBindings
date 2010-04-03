@@ -24,6 +24,16 @@ local states = {
 	shadowDance = '[form:3]',
 
 	shadow = '[bonusbar:1]',
+
+	bear = "[form:1]",
+	cat = "[form:3]",
+	boomkintree = "[form:5]",
+	
+	battle = "[stance:1]",
+	defensive = "[stance:2]",
+	berserker = "[stance:3]",
+	
+	demon = "[form:5]",
 }
 
 local _NAME = ...
@@ -160,7 +170,11 @@ function _NS:LoadBindings(name)
 			if(type(action) ~= 'table') then
 				bindKey(key, action)
 			elseif(states[key]) then
-				_states = _states .. states[key] .. key .. ';'
+				if key == "shift" then
+					_states = states[key] .. key .. ";" .. _states
+				else
+					_states = _states .. states[key] .. key .. ';'
+				end
 				for modKey, action in next, action do
 					bindKey(modKey, action, key)
 				end
