@@ -23,19 +23,6 @@ local states = {
 
 	'shadow|[bonusbar:1]',
 
-<<<<<<< HEAD
-	shadow = '[bonusbar:1]',
-
-	bear = "[form:1]",
-	cat = "[form:3]",
-	boomkintree = "[form:5]",
-	
-	battle = "[stance:1]",
-	defensive = "[stance:2]",
-	berserker = "[stance:3]",
-	
-	demon = "[form:5]",
-=======
 	'bear|[form:1]',
 	'cat|[form:3]',
 	'boomkintree|[form:5]',
@@ -47,7 +34,6 @@ local states = {
 	'demon|[form:5]',
 
 	'possess|[bonusbar:5]',
->>>>>>> upstream/master
 }
 -- it won't change anyway~
 local numStates = #states
@@ -192,16 +178,7 @@ function _NS:LoadBindings(name)
 		for key, action in next, bindings do
 			if(type(action) ~= 'table') then
 				bindKey(key, action)
-<<<<<<< HEAD
-			elseif(states[key]) then
-				if (key == "shift" or key == "ctrl" or key == "alt") then
-					_states = states[key] .. key .. ";" .. _states
-				else
-					_states = _states .. states[key] .. key .. ';'
-				end
-=======
 			elseif(hasState(key)) then
->>>>>>> upstream/master
 				for modKey, action in next, action do
 					bindKey(modKey, action, key)
 				end
