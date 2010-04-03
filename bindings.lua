@@ -7,22 +7,23 @@ local printf = function(f, ...)
 end
 
 local states = {
-	alt = '[mod:alt]',
-	ctrl = '[mod:ctrl]',
-	shift = '[mod:shift]',
+	'alt|[mod:alt]',
+	'ctrl|[mod:ctrl]',
+	'shift|[mod:shift]',
 
 	-- No bar1 as that's our default anyway.
-	bar2 = '[bar:2]',
-	bar3 = '[bar:3]',
-	bar4 = '[bar:4]',
-	bar5 = '[bar:5]',
-	bar6 = '[bar:6]',
+	'bar2|[bar:2]',
+	'bar3|[bar:3]',
+	'bar4|[bar:4]',
+	'bar5|[bar:5]',
+	'bar6|[bar:6]',
 
-	possess = '[bonusbar:5]',
+	'stealth|[bonusbar:1,stealth]',
+	'shadowDance|[form:3]',
 
-	stealth = '[bonusbar:1,stealth]',
-	shadowDance = '[form:3]',
+	'shadow|[bonusbar:1]',
 
+<<<<<<< HEAD
 	shadow = '[bonusbar:1]',
 
 	bear = "[form:1]",
@@ -34,7 +35,31 @@ local states = {
 	berserker = "[stance:3]",
 	
 	demon = "[form:5]",
+=======
+	'bear|[form:1]',
+	'cat|[form:3]',
+	'boomkintree|[form:5]',
+
+	'battle|[stance:1]',
+	'defensive|[stance:2]',
+	'berserker|[stance:3]',
+
+	'demon|[form:5]',
+
+	'possess|[bonusbar:5]',
+>>>>>>> upstream/master
 }
+-- it won't change anyway~
+local numStates = #states
+
+local hasState = function(st)
+	for i=1,numStates do
+		local state, data = string.split('|', states[i], 2)
+		if(state == st) then
+			return data
+		end
+	end
+end
 
 local _NAME = ...
 local _NS = CreateFrame'Frame'
@@ -115,15 +140,13 @@ local createButton = function(key)
 	return btn
 end
 
-local clearButton = function(key)
-	local btn = _BUTTONS[key]
-	if(btn) then
-		for key in next, states do
-			if(key ~= 'possess') then
-				btn:SetAttribute(string.format('ob-%s-type', key), nil)
-				key = (key == 'macro' and 'macrotext') or key
-				btn:SetAttribute(string.format('ob-%s-attribute', key), nil)
-			end
+local clearButton = function(btn)
+	for i=1, numStates-1 do
+		local key = string.split('|', states[i], 2)
+		if(key ~= 'possess') then
+			btn:SetAttribute(string.format('ob-%s-type', key), nil)
+			key = (key == 'macro' and 'macrotext') or key
+			btn:SetAttribute(string.format('ob-%s-attribute', key), nil)
 		end
 	end
 end
@@ -135,13 +158,14 @@ local typeTable = {
 }
 
 local bindKey = function(key, action, mod)
+	local modKey
 	if(mod and (mod == 'alt' or mod == 'ctrl' or mod == 'shift')) then
-		key = mod:upper() .. '-' .. key
+		modKey = mod:upper() .. '-' .. key
 	end
 
 	local ty, action = string.split('|', action)
 	if(not action) then
-		SetBinding(key, ty)
+		SetBinding(modKey or key, ty)
 	else
 		local btn = createButton(key)
 		ty = typeTable[ty]
@@ -150,13 +174,12 @@ local bindKey = function(key, action, mod)
 		ty = (ty == 'macro' and 'macrotext') or ty
 		btn:SetAttribute(string.format('ob-%s-attribute', mod or 'base'), ty .. ',' .. action)
 
-		SetBindingClick(key, btn:GetName())
+		SetBindingClick(modKey or key, btn:GetName())
 	end
 end
 
 function _NS:LoadBindings(name)
 	local bindings = _BINDINGS[name]
-	local _states = ''
 
 	if(bindings and self.activeBindings ~= name) then
 		print("Switching to set:", name)
@@ -169,25 +192,37 @@ function _NS:LoadBindings(name)
 		for key, action in next, bindings do
 			if(type(action) ~= 'table') then
 				bindKey(key, action)
+<<<<<<< HEAD
 			elseif(states[key]) then
 				if (key == "shift" or key == "ctrl" or key == "alt") then
 					_states = states[key] .. key .. ";" .. _states
 				else
 					_states = _states .. states[key] .. key .. ';'
 				end
+=======
+			elseif(hasState(key)) then
+>>>>>>> upstream/master
 				for modKey, action in next, action do
 					bindKey(modKey, action, key)
 				end
 			end
 		end
-	end
 
-	RegisterStateDriver(_STATE, "page", _states .. states.possess .. 'possess;' .. _BASE)
-	_STATE:Execute(([[
-		local state = '%s'
-		control:ChildUpdate('state-changed', state)
-		control:CallMethod('Callbacks', state)
-	]]):format(_STATE:GetAttribute'state-page'))
+		local _states = ''
+		for i=1, numStates-1 do
+			local key,state = string.split('|', states[i], 2)
+			if(bindings[key]) then
+				_states = _states .. state .. key .. ';'
+			end
+		end
+
+		RegisterStateDriver(_STATE, "page", _states .. hasState'possess' .. 'possess;' .. _BASE)
+		_STATE:Execute(([[
+		   local state = '%s'
+		   control:ChildUpdate('state-changed', state)
+		   control:CallMethod('Callbacks', state)
+		]]):format(_STATE:GetAttribute'state-page'))
+	end
 end
 
 _NS:SetScript('OnEvent', function(self, event, ...)
