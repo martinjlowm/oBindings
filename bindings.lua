@@ -17,7 +17,9 @@ local states = {
 	'bar4|[bar:4]',
 	'bar5|[bar:5]',
 	'bar6|[bar:6]',
-
+	
+	'possess|[bonusbar:5]',
+	
 	'stealth|[bonusbar:1,stealth]',
 	'shadowDance|[form:3]',
 
@@ -25,15 +27,13 @@ local states = {
 
 	'bear|[form:1]',
 	'cat|[form:3]',
-	'boomkintree|[form:5]',
+	'moonkintree|[form:5]',
 
 	'battle|[stance:1]',
 	'defensive|[stance:2]',
 	'berserker|[stance:3]',
 
-	'demon|[form:5]',
-
-	'possess|[bonusbar:5]',
+	'demon|[form:2]',
 }
 -- it won't change anyway~
 local numStates = #states
@@ -81,7 +81,6 @@ function _NS:RegisterKeyBindings(name, ...)
 					if(not bindings[key]) then
 						bindings[key] = {}
 					end
-
 					bindings[key][mod] = modAction
 				end
 			else
@@ -127,7 +126,7 @@ local createButton = function(key)
 end
 
 local clearButton = function(btn)
-	for i=1, numStates-1 do
+	for i=1, numStates do
 		local key = string.split('|', states[i], 2)
 		if(key ~= 'possess') then
 			btn:SetAttribute(string.format('ob-%s-type', key), nil)
@@ -186,14 +185,14 @@ function _NS:LoadBindings(name)
 		end
 
 		local _states = ''
-		for i=1, numStates-1 do
+		for i=1, numStates do
 			local key,state = string.split('|', states[i], 2)
-			if(bindings[key]) then
+			if(bindings[key] or key == "possess") then
 				_states = _states .. state .. key .. ';'
 			end
 		end
 
-		RegisterStateDriver(_STATE, "page", _states .. hasState'possess' .. 'possess;' .. _BASE)
+		RegisterStateDriver(_STATE, "page", _states .. _BASE)
 		_STATE:Execute(([[
 		   local state = '%s'
 		   control:ChildUpdate('state-changed', state)
