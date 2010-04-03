@@ -170,7 +170,7 @@ function _NS:LoadBindings(name)
 			if(type(action) ~= 'table') then
 				bindKey(key, action)
 			elseif(states[key]) then
-				if key == "shift" then
+				if (key == "shift" or key == "ctrl" or key == "alt") then
 					_states = states[key] .. key .. ";" .. _states
 				else
 					_states = _states .. states[key] .. key .. ';'
