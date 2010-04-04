@@ -117,6 +117,7 @@ local createButton = function(key)
 	]])
 
 	if(tonumber(key)) then
+		print(key)
 		btn:SetAttribute('ob-possess-type', 'action')
 		btn:SetAttribute('ob-possess-attribute', 'action,' .. (key + 120))
 	end
@@ -154,11 +155,10 @@ local bindKey = function(key, action, mod)
 	else
 		local btn = createButton(key)
 		ty = typeTable[ty]
-
 		btn:SetAttribute(string.format('ob-%s-type', mod or 'base'), ty)
 		ty = (ty == 'macro' and 'macrotext') or ty
 		btn:SetAttribute(string.format('ob-%s-attribute', mod or 'base'), ty .. ',' .. action)
-
+		
 		SetBindingClick(modKey or key, btn:GetName())
 	end
 end
