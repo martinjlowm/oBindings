@@ -11,6 +11,8 @@ local states = {
 	'ctrl|[mod:ctrl]',
 	'shift|[mod:shift]',
 
+	'possess|[bonusbar:5]',
+
 	-- No bar1 as that's our default anyway.
 	'bar2|[bar:2]',
 	'bar3|[bar:3]',
@@ -186,7 +188,7 @@ function _NS:LoadBindings(name)
 		local _states = ''
 		for i=1, numStates do
 			local key,state = string.split('|', states[i], 2)
-			if(bindings[key] or key == "possess") then
+			if(bindings[key] or key == 'possess') then
 				_states = _states .. state .. key .. ';'
 			end
 		end
