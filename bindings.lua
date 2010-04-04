@@ -117,7 +117,6 @@ local createButton = function(key)
 	]])
 
 	if(tonumber(key)) then
-		print(key)
 		btn:SetAttribute('ob-possess-type', 'action')
 		btn:SetAttribute('ob-possess-attribute', 'action,' .. (key + 120))
 	end
