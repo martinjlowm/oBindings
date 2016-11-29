@@ -1,0 +1,182 @@
+<Bindings>
+  <Binding name='OBINDINGS1' hidden='true'>
+    oBindings1:Click()
+  </Binding>
+  <Binding name='OBINDINGS2' hidden='true'>
+    oBindings2:Click()
+  </Binding>
+  <Binding name='OBINDINGS3' hidden='true'>
+    oBindings3:Click()
+  </Binding>
+  <Binding name='OBINDINGS4' hidden='true'>
+    oBindings4:Click()
+  </Binding>
+  <Binding name='OBINDINGS5' hidden='true'>
+    oBindings5:Click()
+  </Binding>
+  <Binding name='OBINDINGS6' hidden='true'>
+    oBindings6:Click()
+  </Binding>
+  <Binding name='OBINDINGS7' hidden='true'>
+    oBindings7:Click()
+  </Binding>
+  <Binding name='OBINDINGS8' hidden='true'>
+    oBindings8:Click()
+  </Binding>
+  <Binding name='OBINDINGS9' hidden='true'>
+    oBindings9:Click()
+  </Binding>
+  <Binding name='OBINDINGS10' hidden='true'>
+    oBindings10:Click()
+  </Binding>
+  <Binding name='OBINDINGS11' hidden='true'>
+    oBindings11:Click()
+  </Binding>
+  <Binding name='OBINDINGS12' hidden='true'>
+    oBindings12:Click()
+  </Binding>
+  <Binding name='OBINDINGS13' hidden='true'>
+    oBindings13:Click()
+  </Binding>
+  <Binding name='OBINDINGS14' hidden='true'>
+    oBindings14:Click()
+  </Binding>
+  <Binding name='OBINDINGS15' hidden='true'>
+    oBindings15:Click()
+  </Binding>
+  <Binding name='OBINDINGS16' hidden='true'>
+    oBindings16:Click()
+  </Binding>
+  <Binding name='OBINDINGS17' hidden='true'>
+    oBindings17:Click()
+  </Binding>
+  <Binding name='OBINDINGS18' hidden='true'>
+    oBindings18:Click()
+  </Binding>
+  <Binding name='OBINDINGS19' hidden='true'>
+    oBindings19:Click()
+  </Binding>
+  <Binding name='OBINDINGS20' hidden='true'>
+    oBindings20:Click()
+  </Binding>
+  <Binding name='OBINDINGS21' hidden='true'>
+    oBindings21:Click()
+  </Binding>
+  <Binding name='OBINDINGS22' hidden='true'>
+    oBindings22:Click()
+  </Binding>
+  <Binding name='OBINDINGS23' hidden='true'>
+    oBindings23:Click()
+  </Binding>
+  <Binding name='OBINDINGS24' hidden='true'>
+    oBindings24:Click()
+  </Binding>
+  <Binding name='OBINDINGS25' hidden='true'>
+    oBindings25:Click()
+  </Binding>
+  <Binding name='OBINDINGS26' hidden='true'>
+    oBindings26:Click()
+  </Binding>
+  <Binding name='OBINDINGS27' hidden='true'>
+    oBindings27:Click()
+  </Binding>
+  <Binding name='OBINDINGS28' hidden='true'>
+    oBindings28:Click()
+  </Binding>
+  <Binding name='OBINDINGS29' hidden='true'>
+    oBindings29:Click()
+  </Binding>
+  <Binding name='OBINDINGS30' hidden='true'>
+    oBindings30:Click()
+  </Binding>
+  <Binding name='OBINDINGS31' hidden='true'>
+    oBindings31:Click()
+  </Binding>
+  <Binding name='OBINDINGS32' hidden='true'>
+    oBindings32:Click()
+  </Binding>
+  <Binding name='OBINDINGS33' hidden='true'>
+    oBindings33:Click()
+  </Binding>
+  <Binding name='OBINDINGS34' hidden='true'>
+    oBindings34:Click()
+  </Binding>
+  <Binding name='OBINDINGS35' hidden='true'>
+    oBindings35:Click()
+  </Binding>
+  <Binding name='OBINDINGS36' hidden='true'>
+    oBindings36:Click()
+  </Binding>
+  <Binding name='OBINDINGS37' hidden='true'>
+    oBindings37:Click()
+  </Binding>
+  <Binding name='OBINDINGS38' hidden='true'>
+    oBindings38:Click()
+  </Binding>
+  <Binding name='OBINDINGS39' hidden='true'>
+    oBindings39:Click()
+  </Binding>
+  <Binding name='OBINDINGS40' hidden='true'>
+    oBindings40:Click()
+  </Binding>
+  <Binding name='OBINDINGS41' hidden='true'>
+    oBindings41:Click()
+  </Binding>
+  <Binding name='OBINDINGS42' hidden='true'>
+    oBindings42:Click()
+  </Binding>
+  <Binding name='OBINDINGS43' hidden='true'>
+    oBindings43:Click()
+  </Binding>
+  <Binding name='OBINDINGS44' hidden='true'>
+    oBindings44:Click()
+  </Binding>
+  <Binding name='OBINDINGS45' hidden='true'>
+    oBindings45:Click()
+  </Binding>
+  <Binding name='OBINDINGS46' hidden='true'>
+    oBindings46:Click()
+  </Binding>
+  <Binding name='OBINDINGS47' hidden='true'>
+    oBindings47:Click()
+  </Binding>
+  <Binding name='OBINDINGS48' hidden='true'>
+    oBindings48:Click()
+  </Binding>
+  <Binding name='OBINDINGS49' hidden='true'>
+    oBindings49:Click()
+  </Binding>
+  <Binding name='OBINDINGS50' hidden='true'>
+    oBindings50:Click()
+  </Binding>
+  <Binding name='OBINDINGS51' hidden='true'>
+    oBindings51:Click()
+  </Binding>
+  <Binding name='OBINDINGS52' hidden='true'>
+    oBindings52:Click()
+  </Binding>
+  <Binding name='OBINDINGS53' hidden='true'>
+    oBindings53:Click()
+  </Binding>
+  <Binding name='OBINDINGS54' hidden='true'>
+    oBindings54:Click()
+  </Binding>
+  <Binding name='OBINDINGS55' hidden='true'>
+    oBindings55:Click()
+  </Binding>
+  <Binding name='OBINDINGS56' hidden='true'>
+    oBindings56:Click()
+  </Binding>
+  <Binding name='OBINDINGS57' hidden='true'>
+    oBindings57:Click()
+  </Binding>
+  <Binding name='OBINDINGS58' hidden='true'>
+    oBindings58:Click()
+  </Binding>
+  <Binding name='OBINDINGS59' hidden='true'>
+    oBindings59:Click()
+  </Binding>
+  <Binding name='OBINDINGS60' hidden='true'>
+    oBindings60:Click()
+  </Binding>
+</Bindings>

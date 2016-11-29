@@ -1,8 +1,7 @@
 -- Stolen from Tuller's Dominos, with some changes.
-local noop = Multibar_EmptyFunc
-MultiActionBar_Update = noop
-MultiActionBar_UpdateGrid = noop
-ShowBonusActionBar = noop
+MultiActionBar_Update = NOOP
+MultiActionBar_UpdateGrid = NOOP
+ShowBonusActionBar = NOOP
 
 UIPARENT_MANAGED_FRAME_POSITIONS['MultiBarRight'] = nil
 UIPARENT_MANAGED_FRAME_POSITIONS['MultiBarLeft'] = nil
@@ -37,9 +36,9 @@ ShapeshiftBarFrame:Hide()
 BonusActionBarFrame:UnregisterAllEvents()
 BonusActionBarFrame:Hide()
 
-PossessBarFrame:UnregisterAllEvents()
-PossessBarFrame:Hide()
+-- PossessBarFrame:UnregisterAllEvents()
+-- PossessBarFrame:Hide()
 
-hooksecurefunc('TalentFrame_LoadUI', function()
-	PlayerTalentFrame:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
-end)
+-- hooksecurefunc('TalentFrame_LoadUI', function()
+-- 	PlayerTalentFrame:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
+-- end)

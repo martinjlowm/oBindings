@@ -1,14 +1,11 @@
-## Interface: 40100
+## Interface: 11200
 ## Title: oBindings
 ## Author: Haste
 ## Version: 1.0
 ## X-eMail: troeks@gmail.com
 ## Notes: Binding management for mad people.
 
+## Dependencies: gxLuaPlus, gxMacroConditions
+
 blizzard.lua
 bindings.lua
-bindings\base.lua
-bindings\priest.lua
-bindings\warlock.lua
-bindings\rogue.lua
-bindings\shaman.lua
