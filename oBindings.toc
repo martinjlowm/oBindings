@@ -8,4 +8,5 @@
 ## Dependencies: gxLuaPlus, gxMacroConditions
 
 blizzard.lua
+Bindings.xml
 bindings.lua

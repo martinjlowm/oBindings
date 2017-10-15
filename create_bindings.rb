@@ -2,7 +2,9 @@
 
 TMPL = <<-EOF
   <Binding name='OBINDINGS%{id}' hidden='true'>
-    oBindings%{id}:Click()
+    if oBindings%{id} then
+      oBindings%{id}:Click()
+    end
   </Binding>
 EOF
 

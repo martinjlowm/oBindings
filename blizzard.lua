@@ -42,3 +42,13 @@ BonusActionBarFrame:Hide()
 -- hooksecurefunc('TalentFrame_LoadUI', function()
 -- 	PlayerTalentFrame:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
 -- end)
+
+PetActionBarFrame:SetParent(UIParent)
+PetActionBarFrame:Show()
+PetActionBarFrame:ClearAllPoints()
+PetActionBarFrame:SetPoint('TOP', UIParent, 'TOP', 32, 0)
+PetActionBarFrame.SetPoint = NOOP
+SlidingActionBarTexture0:Hide()
+SlidingActionBarTexture0.Show = NOOP
+SlidingActionBarTexture1:Hide()
+SlidingActionBarTexture1.Show = NOOP

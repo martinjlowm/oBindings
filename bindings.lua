@@ -1,5 +1,6 @@
 local print = function(...)
-    return ChatFrame1:AddMessage('|cff33ff99oBindings:|r', unpack(arg))
+    return ChatFrame1:AddMessage(
+        string.format('|cff33ff99oBindings:|r %s', string.join(' ', unpack(arg))))
 end
 
 local printf = function(f, ...)
@@ -55,25 +56,47 @@ local _BUTTONS = {}
 
 local _CALLBACKS = {}
 
-local _STATE = CreateFrame("Frame", nil, UIParent)
+local _STATE = CreateFrame('Frame', nil, UIParent)
 _STATE:RegisterEvent('MODIFIER_STATE_CHANGED')
 _STATE:RegisterEvent('ACTIONBAR_PAGE_CHANGED')
+_STATE:RegisterEvent('PLAYER_AURAS_CHANGED')
 local _BASE = 'base'
 
-do
-    local function OnEvent(self, event, arg1)
-        local state = ''
-        if event == 'MODIFIER_STATE_CHANGED' then
-            state = arg1 and string.lower(arg1) or 'base'
-        elseif event == 'ACTIONBAR_PAGE_CHANGED' then
-            state = 'bar' .. CURRENT_ACTIONBAR_PAGE
+_G.IsStealthed = function()
+    local buff, name = 1
+    repeat
+        name = UnitAura('player', buff, 'HELPFUL')
+
+        if name == 'Stealth' or name == 'Prowl' then
+            return true
         end
 
-        for _, btn in next, _BUTTONS do
-            btn:StateChanged(state)
-        end
+        buff = buff + 1
+    until not name
+
+    return false
+end
+
+local state
+local function UpdateState(self, event, arg1)
+    if IsStealthed() then
+        state = 'stealth'
     end
 
+    if event == 'MODIFIER_STATE_CHANGED' then
+        state = arg1 and string.lower(arg1)
+    elseif event == 'ACTIONBAR_PAGE_CHANGED' then
+        state = 'bar' .. CURRENT_ACTIONBAR_PAGE
+    end
+
+    state = state or 'base'
+
+    for _, btn in next, _BUTTONS do
+        btn:StateChanged(state)
+    end
+end
+
+do
     local shift, control, alt
     local propagate
     local modifier
@@ -105,11 +128,11 @@ do
 
         if propagate then
             propagate = false
-            OnEvent(this, 'MODIFIER_STATE_CHANGED', modifier)
+            UpdateState(this, 'MODIFIER_STATE_CHANGED', modifier)
         end
     end
 
-    _STATE:SetScript('OnEvent', function(...) OnEvent(this, event, arg1) end)
+    _STATE:SetScript('OnEvent', function(...) UpdateState(this, event, arg1) end)
     _STATE:SetScript('OnUpdate', OnUpdate)
 end
 
@@ -158,13 +181,19 @@ local function OnClick()
     if this.type == 'spell' then
         CastSpellByName(this.attr)
     elseif this.type == 'macro' then
-        local command = gsub(this.attr, "/([^%s]+)%s(.*)", "%1", 1)
+        local command = string.match(this.attr, "/([^%s]+)")
         local msg = strsub(this.attr, strlen(command) + 3)
-        gxMacroConditions:ParseCommand(command, msg)
+        if command == 'petattack' then
+            PetAttack()
+        elseif command == 'petfollow' then
+            PetFollow()
+        else
+            gxMacroConditions:ParseCommand(command, msg)
+        end
     end
 end
 
-local button_id = 0
+local button_id = 1
 local createButton = function(key)
     if _BUTTONS[key] then
         return _BUTTONS[key]
@@ -229,9 +258,9 @@ function _NS:LoadBindings(name)
         end
 
         for key, action in next, bindings do
-            if (type(action) ~= 'table') then
+            if type(action) ~= 'table' then
                 bindKey(key, action)
-            elseif (hasState(key)) then
+            elseif hasState(key) then
                 for modKey, action in next, action do
                     bindKey(modKey, action, key)
                 end
@@ -241,18 +270,13 @@ function _NS:LoadBindings(name)
         local _states = ''
         for i = 1, numStates do
             local key, state = string.split('|', states[i], 2)
-            if (bindings[key] or key == 'possess') then
+            if bindings[key] or key == 'possess' then
                 _states = _states .. state .. key .. ';'
             end
         end
-
-        -- RegisterStateDriver(_STATE, "page", _states .. _BASE)
-        -- _STATE:Execute(([[
-	-- 	   local state = '%s'
-	-- 	   control:ChildUpdate('state-changed', state)
-	-- 	   control:CallMethod('Callbacks', state)
-	-- 	]]):format(_STATE:GetAttribute'state-page'))
     end
+
+    UpdateState(_STATE)
 end
 
 _NS:SetScript('OnEvent', function(...)
@@ -260,17 +284,7 @@ _NS:SetScript('OnEvent', function(...)
 end)
 
 local talentGroup
-function _NS:PLAYER_ENTERING_WORLD()
-    for i = 0, 9 do
-        createButton(i)
-    end
-
-    self:PLAYER_TALENT_UPDATE()
-end
-_NS:RegisterEvent('PLAYER_ENTERING_WORLD')
-
-
-function _NS:PLAYER_TALENT_UPDATE()
+function _NS:UPDATE_INSTANCE_INFO()
     local numTabs = GetNumTalentTabs()
     local talentString
     local mostPoints = -1
@@ -290,21 +304,24 @@ function _NS:PLAYER_TALENT_UPDATE()
         end
     end
 
-    self:UnregisterEvent('PLAYER_TALENT_UPDATE')
+    self:UnregisterEvent('UPDATE_INSTANCE_INFO')
     if _BINDINGS[talentString] then
         self:LoadBindings(talentString)
-    elseif (_BINDINGS[mostPointsName]) then
+    elseif _BINDINGS[mostPointsName] then
         self:LoadBindings(mostPointsName)
+    elseif next(_BINDINGS) then
+        print('No talents found. Switching to default set.')
+        self:LoadBindings(next(_BINDINGS))
     else
         print('Unable to find any bindings.')
     end
 end
-_NS:RegisterEvent('PLAYER_TALENT_UPDATE')
+_NS:RegisterEvent('UPDATE_INSTANCE_INFO')
 
 function _NS:ACTIVE_TALENT_GROUP_CHANGED()
     if talentGroup == GetActiveTalentGroup() then return end
 
     talentGroup = GetActiveTalentGroup()
-    self:PLAYER_TALENT_UPDATE()
+    self:UPDATE_INSTANCE_INFO()
 end
 _NS:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')

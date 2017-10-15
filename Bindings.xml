@@ -1,182 +1,302 @@
 <Bindings>
   <Binding name='OBINDINGS1' hidden='true'>
-    oBindings1:Click()
+    if oBindings1 then
+      oBindings1:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS2' hidden='true'>
-    oBindings2:Click()
+    if oBindings2 then
+      oBindings2:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS3' hidden='true'>
-    oBindings3:Click()
+    if oBindings3 then
+      oBindings3:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS4' hidden='true'>
-    oBindings4:Click()
+    if oBindings4 then
+      oBindings4:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS5' hidden='true'>
-    oBindings5:Click()
+    if oBindings5 then
+      oBindings5:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS6' hidden='true'>
-    oBindings6:Click()
+    if oBindings6 then
+      oBindings6:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS7' hidden='true'>
-    oBindings7:Click()
+    if oBindings7 then
+      oBindings7:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS8' hidden='true'>
-    oBindings8:Click()
+    if oBindings8 then
+      oBindings8:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS9' hidden='true'>
-    oBindings9:Click()
+    if oBindings9 then
+      oBindings9:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS10' hidden='true'>
-    oBindings10:Click()
+    if oBindings10 then
+      oBindings10:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS11' hidden='true'>
-    oBindings11:Click()
+    if oBindings11 then
+      oBindings11:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS12' hidden='true'>
-    oBindings12:Click()
+    if oBindings12 then
+      oBindings12:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS13' hidden='true'>
-    oBindings13:Click()
+    if oBindings13 then
+      oBindings13:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS14' hidden='true'>
-    oBindings14:Click()
+    if oBindings14 then
+      oBindings14:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS15' hidden='true'>
-    oBindings15:Click()
+    if oBindings15 then
+      oBindings15:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS16' hidden='true'>
-    oBindings16:Click()
+    if oBindings16 then
+      oBindings16:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS17' hidden='true'>
-    oBindings17:Click()
+    if oBindings17 then
+      oBindings17:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS18' hidden='true'>
-    oBindings18:Click()
+    if oBindings18 then
+      oBindings18:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS19' hidden='true'>
-    oBindings19:Click()
+    if oBindings19 then
+      oBindings19:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS20' hidden='true'>
-    oBindings20:Click()
+    if oBindings20 then
+      oBindings20:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS21' hidden='true'>
-    oBindings21:Click()
+    if oBindings21 then
+      oBindings21:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS22' hidden='true'>
-    oBindings22:Click()
+    if oBindings22 then
+      oBindings22:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS23' hidden='true'>
-    oBindings23:Click()
+    if oBindings23 then
+      oBindings23:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS24' hidden='true'>
-    oBindings24:Click()
+    if oBindings24 then
+      oBindings24:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS25' hidden='true'>
-    oBindings25:Click()
+    if oBindings25 then
+      oBindings25:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS26' hidden='true'>
-    oBindings26:Click()
+    if oBindings26 then
+      oBindings26:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS27' hidden='true'>
-    oBindings27:Click()
+    if oBindings27 then
+      oBindings27:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS28' hidden='true'>
-    oBindings28:Click()
+    if oBindings28 then
+      oBindings28:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS29' hidden='true'>
-    oBindings29:Click()
+    if oBindings29 then
+      oBindings29:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS30' hidden='true'>
-    oBindings30:Click()
+    if oBindings30 then
+      oBindings30:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS31' hidden='true'>
-    oBindings31:Click()
+    if oBindings31 then
+      oBindings31:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS32' hidden='true'>
-    oBindings32:Click()
+    if oBindings32 then
+      oBindings32:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS33' hidden='true'>
-    oBindings33:Click()
+    if oBindings33 then
+      oBindings33:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS34' hidden='true'>
-    oBindings34:Click()
+    if oBindings34 then
+      oBindings34:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS35' hidden='true'>
-    oBindings35:Click()
+    if oBindings35 then
+      oBindings35:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS36' hidden='true'>
-    oBindings36:Click()
+    if oBindings36 then
+      oBindings36:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS37' hidden='true'>
-    oBindings37:Click()
+    if oBindings37 then
+      oBindings37:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS38' hidden='true'>
-    oBindings38:Click()
+    if oBindings38 then
+      oBindings38:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS39' hidden='true'>
-    oBindings39:Click()
+    if oBindings39 then
+      oBindings39:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS40' hidden='true'>
-    oBindings40:Click()
+    if oBindings40 then
+      oBindings40:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS41' hidden='true'>
-    oBindings41:Click()
+    if oBindings41 then
+      oBindings41:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS42' hidden='true'>
-    oBindings42:Click()
+    if oBindings42 then
+      oBindings42:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS43' hidden='true'>
-    oBindings43:Click()
+    if oBindings43 then
+      oBindings43:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS44' hidden='true'>
-    oBindings44:Click()
+    if oBindings44 then
+      oBindings44:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS45' hidden='true'>
-    oBindings45:Click()
+    if oBindings45 then
+      oBindings45:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS46' hidden='true'>
-    oBindings46:Click()
+    if oBindings46 then
+      oBindings46:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS47' hidden='true'>
-    oBindings47:Click()
+    if oBindings47 then
+      oBindings47:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS48' hidden='true'>
-    oBindings48:Click()
+    if oBindings48 then
+      oBindings48:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS49' hidden='true'>
-    oBindings49:Click()
+    if oBindings49 then
+      oBindings49:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS50' hidden='true'>
-    oBindings50:Click()
+    if oBindings50 then
+      oBindings50:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS51' hidden='true'>
-    oBindings51:Click()
+    if oBindings51 then
+      oBindings51:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS52' hidden='true'>
-    oBindings52:Click()
+    if oBindings52 then
+      oBindings52:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS53' hidden='true'>
-    oBindings53:Click()
+    if oBindings53 then
+      oBindings53:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS54' hidden='true'>
-    oBindings54:Click()
+    if oBindings55 then
+      oBindings54:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS55' hidden='true'>
-    oBindings55:Click()
+    if oBindings55 then
+      oBindings55:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS56' hidden='true'>
-    oBindings56:Click()
+    if oBindings56 then
+      oBindings56:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS57' hidden='true'>
-    oBindings57:Click()
+    if oBindings57 then
+      oBindings57:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS58' hidden='true'>
-    oBindings58:Click()
+    if oBindings58 then
+      oBindings58:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS59' hidden='true'>
-    oBindings59:Click()
+    if oBindings59 then
+      oBindings59:Click()
+    end
   </Binding>
   <Binding name='OBINDINGS60' hidden='true'>
-    oBindings60:Click()
+    if oBindings60 then
+      oBindings60:Click()
+    end
   </Binding>
 </Bindings>
