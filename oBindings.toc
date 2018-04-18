@@ -5,8 +5,14 @@
 ## X-eMail: troeks@gmail.com
 ## Notes: Binding management for mad people.
 
-## Dependencies: gxLuaPlus, gxMacroConditions
+## Dependencies: StateDriver, ModernizrLib
 
+libs\Sol\libs\LibStub\LibStub.lua
+libs\Sol\Sol.lua
+
+init.lua
 blizzard.lua
 Bindings.xml
 bindings.lua
+private.lua
+factory.lua

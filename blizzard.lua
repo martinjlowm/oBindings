@@ -32,6 +32,7 @@ MainMenuExpBar:Hide()
 
 ShapeshiftBarFrame:UnregisterAllEvents()
 ShapeshiftBarFrame:Hide()
+ShapeshiftBarFrame = nil
 
 BonusActionBarFrame:UnregisterAllEvents()
 BonusActionBarFrame:Hide()

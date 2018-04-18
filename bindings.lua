@@ -46,10 +46,8 @@ local hasState = function(st)
     end
 end
 
+local oBindings = oBindings
 local _G = getfenv(0)
-local _NAME = 'oBindings'
-local _NS = CreateFrame('Frame')
-_G[_NAME] = _NS
 
 local _BINDINGS = {}
 local _BUTTONS = {}
@@ -62,95 +60,19 @@ _STATE:RegisterEvent('ACTIONBAR_PAGE_CHANGED')
 _STATE:RegisterEvent('PLAYER_AURAS_CHANGED')
 local _BASE = 'base'
 
-_G.IsStealthed = function()
-    local buff, name = 1
-    repeat
-        name = UnitAura('player', buff, 'HELPFUL')
-
-        if name == 'Stealth' or name == 'Prowl' then
-            return true
-        end
-
-        buff = buff + 1
-    until not name
-
-    return false
-end
-
-local state
-local function UpdateState(self, event, arg1)
-    if IsStealthed() then
-        state = 'stealth'
-    end
-
-    if event == 'MODIFIER_STATE_CHANGED' then
-        state = arg1 and string.lower(arg1)
-    elseif event == 'ACTIONBAR_PAGE_CHANGED' then
-        state = 'bar' .. CURRENT_ACTIONBAR_PAGE
-    end
-
-    state = state or 'base'
-
-    for _, btn in next, _BUTTONS do
-        btn:StateChanged(state)
+function _STATE:Callbacks(state)
+    for _, func in next, _CALLBACKS do
+        func(self, state)
     end
 end
 
-do
-    local shift, control, alt
-    local propagate
-    local modifier
-    local function OnUpdate()
-        if not shift and IsShiftKeyDown() then
-            shift = true
-            modifier = 'SHIFT'
-            propagate = true
-        elseif shift and not IsShiftKeyDown() then
-            shift = false
-            propagate = true
-        elseif not control and IsControlKeyDown() then
-            control = true
-            modifier = 'CTRL'
-            propagate = true
-        elseif control and not IsControlKeyDown() then
-            control = false
-            propagate = true
-        elseif not alt and IsAltKeyDown() then
-            alt = true
-            modifier = 'ALT'
-            propagate = true
-        elseif alt and not IsAltKeyDown() then
-            alt = false
-            propagate = true
-        else
-            modifier = nil
-        end
-
-        if propagate then
-            propagate = false
-            UpdateState(this, 'MODIFIER_STATE_CHANGED', modifier)
-        end
-    end
-
-    _STATE:SetScript('OnEvent', function(...) UpdateState(this, event, arg1) end)
-    _STATE:SetScript('OnUpdate', OnUpdate)
+local function onState(frame, state_id, new_state)
+    frame:ChildUpdate('state-changed', new_state)
+    -- Callbacks(new_state)
 end
+_STATE:SetAttribute('_onstate-page', onState)
 
-local function StateChanged(self, state)
-    local state_type = state and self['ob-' .. state .. '-type'] or self['ob-base-type']
-
-    if state_type then
-        local attr, attrData = string.split(
-            ',',
-            state and self['ob-' .. state .. '-attribute'] or self['ob-base-attribute'], 2)
-
-        self.type = state_type
-        self.attr = attrData
-    end
-end
-
-
-function _NS:RegisterKeyBindings(name, ...)
+function oBindings:RegisterKeyBindings(name, ...)
     local bindings = {}
 
     for i = 1, select('#', unpack(arg)) do
@@ -173,24 +95,8 @@ function _NS:RegisterKeyBindings(name, ...)
     _BINDINGS[name] = bindings
 end
 
-function _NS:RegisterCallback(func)
+function oBindings:RegisterCallback(func)
     table.insert(_CALLBACKS, func)
-end
-
-local function OnClick()
-    if this.type == 'spell' then
-        CastSpellByName(this.attr)
-    elseif this.type == 'macro' then
-        local command = string.match(this.attr, "/([^%s]+)")
-        local msg = strsub(this.attr, strlen(command) + 3)
-        if command == 'petattack' then
-            PetAttack()
-        elseif command == 'petfollow' then
-            PetFollow()
-        else
-            gxMacroConditions:ParseCommand(command, msg)
-        end
-    end
 end
 
 local button_id = 1
@@ -201,8 +107,27 @@ local createButton = function(key)
 
     local btn = CreateFrame('Button', 'oBindings' .. button_id, _STATE,
                             'ActionButtonTemplate')
-    btn.StateChanged = StateChanged
-    btn:SetScript('OnClick', OnClick)
+    local function stateChanged(self, message)
+        local type =
+            message and self:GetAttribute('ob-' .. message .. '-type') or
+            self:GetAttribute('ob-base-type')
+
+        if type then
+            local attribute =
+                message and self:GetAttribute('ob-' .. message .. '-attribute') or
+                self:GetAttribute('ob-base-attribute')
+            local attr_state, attr_data = string.split(',', attribute, 2)
+
+            self:SetAttribute('type', type)
+            self:SetAttribute(attr_state, attr_data)
+        end
+    end
+    btn:SetAttribute('_childupdate-state-changed', stateChanged)
+
+    if tonumber(key) then
+        btn:SetAttribute('ob-possess-type', 'action')
+        btn:SetAttribute('ob-possess-attribute', 'action,' .. (key + 120))
+    end
 
     button_id = button_id + 1
 
@@ -214,17 +139,20 @@ local clearButton = function(btn)
     for i = 1, numStates do
         local key = string.split('|', states[i], 2)
         if (key ~= 'possess') then
-            btn[string.format('ob-%s-type', key)] = nil
+            btn:SetAttribute(string.format('ob-%s-type', key), nil)
             key = (key == 'macro' and 'macrotext') or key
-            btn[string.format('ob-%s-attribute', key)] = nil
+            btn:SetAttribute(string.format('ob-%s-attribute', key), nil)
         end
     end
 end
 
 local typeTable = {
-    s = 'spell',
+    a = 'assign',
+    f = 'func',
     i = 'item',
     m = 'macro',
+    p = 'pet',
+    s = 'spell',
 }
 
 local bindKey = function(key, action, mod)
@@ -240,14 +168,15 @@ local bindKey = function(key, action, mod)
         local btn = createButton(key)
         ty = typeTable[ty]
 
-        btn[string.format('ob-%s-type', mod or 'base')] = ty
+        btn:SetAttribute(string.format('ob-%s-type', mod or 'base'), ty)
         ty = (ty == 'macro' and 'macrotext') or ty
-        btn[string.format('ob-%s-attribute', mod or 'base')] = ty .. ',' .. action
+        btn:SetAttribute(string.format('ob-%s-attribute', mod or 'base'),
+                         ty .. ',' .. action)
         SetBinding(modKey or key, string.upper(btn:GetName()))
     end
 end
 
-function _NS:LoadBindings(name)
+function oBindings:LoadBindings(name)
     local bindings = _BINDINGS[name]
 
     if bindings and self.activeBindings ~= name then
@@ -274,17 +203,20 @@ function _NS:LoadBindings(name)
                 _states = _states .. state .. key .. ';'
             end
         end
-    end
 
-    UpdateState(_STATE)
+        RegisterStateDriver(_STATE, 'page', _states .. _BASE)
+        local state = _STATE:GetAttribute('state-page')
+        _STATE:ChildUpdate('state-changed', state)
+        -- Callbacks(state)
+    end
 end
 
-_NS:SetScript('OnEvent', function(...)
+oBindings:SetScript('OnEvent', function(...)
                   return this[event](this, event, unpack(arg))
 end)
 
 local talentGroup
-function _NS:UPDATE_INSTANCE_INFO()
+function oBindings:UPDATE_INSTANCE_INFO()
     local numTabs = GetNumTalentTabs()
     local talentString
     local mostPoints = -1
@@ -316,12 +248,12 @@ function _NS:UPDATE_INSTANCE_INFO()
         print('Unable to find any bindings.')
     end
 end
-_NS:RegisterEvent('UPDATE_INSTANCE_INFO')
+oBindings:RegisterEvent('UPDATE_INSTANCE_INFO')
 
-function _NS:ACTIVE_TALENT_GROUP_CHANGED()
+function oBindings:ACTIVE_TALENT_GROUP_CHANGED()
     if talentGroup == GetActiveTalentGroup() then return end
 
     talentGroup = GetActiveTalentGroup()
     self:UPDATE_INSTANCE_INFO()
 end
-_NS:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
+oBindings:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
