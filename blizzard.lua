@@ -1,4 +1,4 @@
--- Stolen from Tuller's Dominos, with some changes.
+-- -- Stolen from Tuller's Dominos, with some changes.
 local noop = Multibar_EmptyFunc
 MultiActionBar_Update = noop
 MultiActionBar_UpdateGrid = noop
@@ -27,19 +27,20 @@ MainMenuBarArtFrame:UnregisterEvent('UNIT_ENTERED_VEHICLE')
 MainMenuBarArtFrame:UnregisterEvent('UNIT_EXITING_VEHICLE')
 MainMenuBarArtFrame:UnregisterEvent('UNIT_EXITED_VEHICLE')
 MainMenuBarArtFrame:Hide()
+MicroButtonAndBagsBar:Hide()
 
-MainMenuExpBar:UnregisterAllEvents()
-MainMenuExpBar:Hide()
+-- MainMenuExpBar:UnregisterAllEvents()
+-- MainMenuExpBar:Hide()
 
-ShapeshiftBarFrame:UnregisterAllEvents()
-ShapeshiftBarFrame:Hide()
+-- ShapeshiftBarFrame:UnregisterAllEvents()
+-- ShapeshiftBarFrame:Hide()
 
-BonusActionBarFrame:UnregisterAllEvents()
-BonusActionBarFrame:Hide()
+-- BonusActionBarFrame:UnregisterAllEvents()
+-- BonusActionBarFrame:Hide()
 
 PossessBarFrame:UnregisterAllEvents()
 PossessBarFrame:Hide()
 
-hooksecurefunc('TalentFrame_LoadUI', function()
-	PlayerTalentFrame:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
-end)
+-- hooksecurefunc('TalentFrame_LoadUI', function()
+-- 	PlayerTalentFrame:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
+-- end)
