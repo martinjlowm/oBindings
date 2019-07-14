@@ -1,0 +1,54 @@
+devDependencies:
+  lua-types: 2.5.2
+  tstl: 2.2.0
+  typescript: 3.5.3
+  typescript-to-lua: 0.24.0
+lockfileVersion: 5
+packages:
+  /lua-types/2.5.2:
+    dev: true
+    resolution:
+      integrity: sha512-JaVECSBG5z/BheVJOsPxEmrVDvTEnnuOlZuDHuktEWVq6+0xxq1rR3W7fJP+tKfXYtVjsZxMZhHSTd/vesP6Qw==
+  /path-parse/1.0.6:
+    dev: true
+    resolution:
+      integrity: sha512-GSmOT2EbHrINBf9SR7CDELwlJ8AENk3Qn7OikK4nFYAu3Ote2+JYNVvkpAEQm3/TLNEJFD/xZJjzyxg3KBWOzw==
+  /resolve/1.11.1:
+    dependencies:
+      path-parse: 1.0.6
+    dev: true
+    resolution:
+      integrity: sha512-vIpgF6wfuJOZI7KKKSP+HmiKggadPQAdsp5HiC1mvqnfp0gF1vdwgBWZIdrVft9pgqoMFQN+R7BSWZiBxx+BBw==
+  /source-map/0.7.3:
+    dev: true
+    engines:
+      node: '>= 8'
+    resolution:
+      integrity: sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
+  /tstl/2.2.0:
+    dev: true
+    resolution:
+      integrity: sha512-gVp5Nx50cb+oaAEtO6PDvpqc2ulXkOA78Wb/szAT/ssGfnZFgjutKO0AOPo8EakMOtMb4sOrq7Ugl5LqdoxmWg==
+  /typescript-to-lua/0.24.0:
+    dependencies:
+      resolve: 1.11.1
+      source-map: 0.7.3
+      typescript: 3.5.3
+    dev: true
+    engines:
+      node: '>=8.5.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-HC5dA7qXDgHEA0opZ7bmkOdzDgit/xmBKKbT+DKGk3IOQvd2brGzgQ5If0r1H24hkz6piuGzd0b/63/tUgWeyQ==
+  /typescript/3.5.3:
+    dev: true
+    engines:
+      node: '>=4.2.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
+specifiers:
+  lua-types: ^2.5.2
+  tstl: ^2.2.0
+  typescript: ^3.5.2
+  typescript-to-lua: ^0.24.0

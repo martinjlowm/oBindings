@@ -5,10 +5,5 @@
 ## X-eMail: troeks@gmail.com
 ## Notes: Binding management for mad people.
 
-blizzard.lua
-bindings.lua
-bindings\base.lua
-bindings\priest.lua
-bindings\warlock.lua
-bindings\rogue.lua
-bindings\shaman.lua
+dist\blizzard.lua
+dist\bindings.lua
