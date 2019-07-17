@@ -7,8 +7,7 @@
     "outDir": "dist",
     "rootDir": "src",
     "paths": {
-      "@/*": ["src/*"],
-      "$/*": ["test/*"]
+      "@/*": ["src/*"]
     },
     "types": ["lua-types/5.3", "@types/wow-api"],
     "typeRoots": ["node_modules/@types"]

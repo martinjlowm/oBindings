@@ -56,10 +56,12 @@ const [_NAME] = [...FILE_ARGUMENTS];
 const _NS = CreateFrame('Frame');
 _G[_NAME] = _NS
 
+interface IBindingsSet {
+  [keyOrModifier: string]: string | { [key: string]: string }
+}
+
 interface IBindings {
-  [setName: string]: {
-    [keyOrModifier: string]: string | { [key: string]: string }
-  };
+  [setName: string]: IBindingsSet;
 }
 const _BINDINGS: IBindings = {};
 const _BUTTONS: any = {};
@@ -80,14 +82,14 @@ _STATE.SetAttribute('_onstate-page', `
   control:CallMethod('Callbacks', newstate)
 `)
 
-_NS.RegisterKeyBindings = (name, ...args: any[]) => {
+_NS.RegisterKeyBindings = (name: string, ...args: IBindingsSet[]) => {
   const bindings = {}
 
   for (const i of forRange(1, select('#', ...args))) {
-    const tbl = select(i, ...args);
+    const [tbl] = select(i, ...args);
 
     for (const [key, action] of pairs(tbl)) {
-      if (type(action) == 'table') {
+      if (typeof action === 'object') {
         for (const [mod, modAction] of pairs(action)) {
           if (!bindings[key]) {
             bindings[key] = {}
@@ -103,13 +105,13 @@ _NS.RegisterKeyBindings = (name, ...args: any[]) => {
   _BINDINGS[name] = bindings
 }
 
-_NS.RegisterCallback = (func) => {
+_NS.RegisterCallback = (func: WoWAPI.HandlerFunction) => {
   table.insert(_CALLBACKS, func)
 }
 
-const createButton = (key) => {
+const createButton = (key: string | number) => {
   if (_BUTTONS[key]) {
-    return _BUTTONS[key]
+    return _BUTTONS[key];
   }
 
   const btn = CreateFrame("Button", `oBindings${key}`, _STATE, "SecureActionButtonTemplate");
@@ -125,9 +127,9 @@ const createButton = (key) => {
       self:SetAttribute('type',type)
       self:SetAttribute(attr, attrData)
     end
-  `)
+  `);
 
-  if (tonumber(key)) {
+  if (typeof key === 'number') {
     btn.SetAttribute('ob-possess-type', 'action');
     btn.SetAttribute('ob-possess-attribute', `action,${(key + 120)}`);
   }
@@ -136,7 +138,7 @@ const createButton = (key) => {
   return btn;
 }
 
-const clearButton = (btn) => {
+const clearButton = (btn: WoWAPI.Frame) => {
   for (const i of forRange(1, numStates)) {
     let [key] = string.split('|', states[i], 2);
     if (key !== 'possess') {
@@ -155,8 +157,8 @@ const typeTable = {
 
 const bindKey = (key, action: string, mod?: string | number) => {
   let modKey: string;
-  if (mod && (mod == 'alt' || mod == 'ctrl' || mod == 'shift')) {
-    modKey = `${mod.toUpperCase()}-${key}`;
+  if (mod && (mod === 'alt' || mod === 'ctrl' || mod === 'shift')) {
+    modKey = `${mod.upper()}-${key}`;
   }
 
   let [ty, act] = string.split('|', action);
@@ -175,7 +177,7 @@ const bindKey = (key, action: string, mod?: string | number) => {
   }
 };
 
-_NS.LoadBindings = (self, name) => {
+_NS.LoadBindings = (self: typeof _NS, name: string) => {
   const bindings = _BINDINGS[name]
 
   if (bindings && self.activeBindings !== name) {
@@ -214,11 +216,11 @@ _NS.LoadBindings = (self, name) => {
   }
 };
 
-_NS.SetScript('OnEvent', (self, event, ...rest) => {
-  return self[event](self, event, ...rest);
+_NS.SetScript('OnEvent', (self: typeof _NS, event: string, ...args: Vararg<any>) => {
+  return self[event](event, ...args);
 })
 
-_NS.ADDON_LOADED = (self, event, addon) => {
+_NS.ADDON_LOADED = (self: typeof _NS, event: string, addon: string) => {
   // For the possess madness.
   if (addon == _NAME) {
     for (const i of forRange(0, 9)) {
@@ -232,7 +234,7 @@ _NS.ADDON_LOADED = (self, event, addon) => {
 
 _NS.RegisterEvent('ADDON_LOADED');
 
-_NS.PLAYER_TALENT_UPDATE = (self) => {
+_NS.PLAYER_TALENT_UPDATE = (self: typeof _NS) => {
   const activeSpecialization = GetSpecialization(false, false)
   const numSpecializations = GetNumSpecializations(false, false)
 
@@ -252,7 +254,7 @@ _NS.PLAYER_TALENT_UPDATE = (self) => {
 
 _NS.RegisterEvent('PLAYER_TALENT_UPDATE');
 
-_NS.ACTIVE_TALENT_GROUP_CHANGED = (self) => {
+_NS.ACTIVE_TALENT_GROUP_CHANGED = (self: typeof _NS) => {
   self.PLAYER_TALENT_UPDATE();
 }
 _NS.RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED');
