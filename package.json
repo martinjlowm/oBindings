@@ -9,6 +9,6 @@
     "lua-types": "^2.5.2",
     "tstl": "^2.2.0",
     "typescript": "^3.5.2",
-    "typescript-to-lua": "^0.24.0"
+    "typescript-to-lua": "^0.25.0"
   }
 }

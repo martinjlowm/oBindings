@@ -2,7 +2,7 @@ devDependencies:
   lua-types: 2.5.2
   tstl: 2.2.0
   typescript: 3.5.3
-  typescript-to-lua: 0.24.0
+  typescript-to-lua: 0.25.0
 lockfileVersion: 5
 packages:
   /lua-types/2.5.2:
@@ -29,7 +29,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-gVp5Nx50cb+oaAEtO6PDvpqc2ulXkOA78Wb/szAT/ssGfnZFgjutKO0AOPo8EakMOtMb4sOrq7Ugl5LqdoxmWg==
-  /typescript-to-lua/0.24.0:
+  /typescript-to-lua/0.25.0:
     dependencies:
       resolve: 1.11.1
       source-map: 0.7.3
@@ -39,7 +39,7 @@ packages:
       node: '>=8.5.0'
     hasBin: true
     resolution:
-      integrity: sha512-HC5dA7qXDgHEA0opZ7bmkOdzDgit/xmBKKbT+DKGk3IOQvd2brGzgQ5If0r1H24hkz6piuGzd0b/63/tUgWeyQ==
+      integrity: sha512-XV7jlG3vBrXpHlW2MjoYczfopzyeuUNC81dZDjPq1Cw1sIOnWQCYZJUVUBU7FjjJKYWgbBegJRcpjofPDThg0g==
   /typescript/3.5.3:
     dev: true
     engines:
@@ -51,4 +51,4 @@ specifiers:
   lua-types: ^2.5.2
   tstl: ^2.2.0
   typescript: ^3.5.2
-  typescript-to-lua: ^0.24.0
+  typescript-to-lua: ^0.25.0

@@ -158,7 +158,7 @@ const typeTable = {
 const bindKey = (key, action: string, mod?: string | number) => {
   let modKey: string;
   if (mod && (mod === 'alt' || mod === 'ctrl' || mod === 'shift')) {
-    modKey = `${mod.upper()}-${key}`;
+    modKey = `${mod.toUpperCase()}-${key}`;
   }
 
   let [ty, act] = string.split('|', action);
