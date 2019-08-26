@@ -3,7 +3,8 @@
   "description": "Binding management for mad people",
   "scripts": {
     "build": "tstl -p tsconfig.json",
-    "test": "pnpm run build && echo 'Not implemented yet'"
+    "test": "pnpm run build && echo 'Not implemented yet'",
+    "watch": "tstl -p tsconfig.json --watch"
   },
   "devDependencies": {
     "lua-types": "^2.5.2",

@@ -2,11 +2,25 @@
  * @noSelfInFile
  */
 
+const [, , , interfaceVersion] = GetBuildInfo();
+
+function isClassic(v: number) {
+  return 13020 <= v;
+}
+
+function isWOTLK(v: number) {
+  return 30000 <= v;
+}
+
+function isBfA(v: number) {
+  return 80000 <= v;
+}
+
 const _print = (...args: string[]) => {
   return print('|cff33ff99oBindings:|r', ...args);
 };
 
-const printf = (f, ...parts: string[]) => {
+const printf = (f: string, ...parts: string[]) => {
   return print(f.format(...parts));
 }
 
@@ -105,7 +119,7 @@ _NS.RegisterKeyBindings = (_self: typeof _NS, name: string, ...args: Vararg<IBin
   _BINDINGS[name] = bindings
 }
 
-_NS.RegisterCallback = (_self: typeof _NS, func: WoWAPI.HandlerFunction) => {
+_NS.RegisterCallback = (_self: typeof _NS, func: (...args: any[]) => any) => {
   table.insert(_CALLBACKS, func)
 }
 
@@ -139,8 +153,8 @@ const createButton = (key: string | number) => {
 }
 
 const clearButton = (btn: WoWAPI.Frame) => {
-    for (const i of forRange(1, numStates)) {
-      let [key] = string.split('|', states[i - 1], 2);
+  for (const i of forRange(1, numStates)) {
+    let [key] = string.split('|', states[i - 1], 2);
     if (key !== 'possess') {
       btn.SetAttribute('ob-%s-type'.format(key), null);
       key = key == 'macro' ? 'macrotext' : key;
@@ -155,7 +169,7 @@ const typeTable = {
   m: 'macro',
 };
 
-const bindKey = (key, action: string, mod?: string | number) => {
+const bindKey = (key: string | number, action: string, mod?: string | number) => {
   let modKey: string;
   if (mod && (mod === 'alt' || mod === 'ctrl' || mod === 'shift')) {
     modKey = `${mod.toUpperCase()}-${key}`;
@@ -171,7 +185,7 @@ const bindKey = (key, action: string, mod?: string | number) => {
     btn.SetAttribute('ob-%s-type'.format(mod || 'base'), ty)
     ty = ty == 'macro' ? 'macrotext' : ty;
 
-    btn.SetAttribute('ob-%s-attribute'.format(mod || 'base'), `${ty},${act.gsub('\n', '').gsub('%s+', '')}`);
+    btn.SetAttribute('ob-%s-attribute'.format(mod || 'base'), `${ty},${act.gsub('\n', '').match('^%s*(.-)%s*$')}`);
 
     SetBindingClick(modKey || key, btn.GetName())
   }
@@ -184,7 +198,7 @@ _NS.LoadBindings = (self: typeof _NS, name: string) => {
     print("Switching to set:", name)
     self.activeBindings = name
 
-    for (const [_, btn] of pairs(_BUTTONS)) {
+    for (const [, btn] of pairs(_BUTTONS)) {
       clearButton(btn);
     }
 
@@ -216,13 +230,15 @@ _NS.LoadBindings = (self: typeof _NS, name: string) => {
   }
 };
 
-_NS.SetScript('OnEvent', (self: typeof _NS, event: string, ...args: Vararg<any>) => {
-  return self[event](event, ...args);
-})
 
-_NS.ADDON_LOADED = (self: typeof _NS, event: string, addon: string) => {
+
+_NS.SetScript('OnEvent', function(event: string, ...args: Vararg<any>) {
+  return this[event](event, ...args);
+});
+
+_NS.ADDON_LOADED = (self: typeof _NS, _event: string, addon: string) => {
   // For the possess madness.
-  if (addon == _NAME) {
+  if (addon === _NAME) {
     for (const i of forRange(0, 9)) {
       createButton(i)
     }
@@ -233,36 +249,70 @@ _NS.ADDON_LOADED = (self: typeof _NS, event: string, addon: string) => {
 }
 _NS.RegisterEvent('ADDON_LOADED');
 
-_NS.UPDATE_INSTANCE_INFO = (self: typeof _NS) => {
-  const numTabs = GetNumTalentTabs();
-  let talentString: string;
-  let mostPoints = -1;
-  let mostPointsName: string;
 
-  if (!numTabs) {
-    return
+if (isWOTLK(interfaceVersion) && !isBfA(interfaceVersion)) {
+  let talentGroup: string;
+  _NS.ACTIVE_TALENT_GROUP_CHANGED = (self: typeof _NS) => {
+    if (talentGroup == GetActiveTalentGroup()) {
+      return;
+    }
+    talentGroup = GetActiveTalentGroup();
+    self.UPDATE_INSTANCE_INFO();
   }
+  _NS.RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
+}
 
-  for (let i = 1; i <= numTabs; i++) {
-    const [name, , points] = GetTalentTabInfo(i);
-    talentString = `${(talentString && `${talentString}/` || '')}${points}`;
+if (isBfA(interfaceVersion)) {
+  _NS.PLAYER_TALENT_UPDATE = (self: typeof _NS) => {
+    const activeSpecialization = GetSpecialization(null, false);
+    const numSpecializations = GetNumSpecializations(false, false);
 
-    if (points > mostPoints) {
-      mostPoints = points;
-      mostPointsName = name;
+    if (numSpecializations === 0) {
+      return;
+    }
+
+    const [, name] = GetSpecializationInfo(activeSpecialization);
+
+    self.UnregisterEvent('PLAYER_TALENT_UPDATE');
+    if (_BINDINGS[name]) {
+      self.LoadBindings(name)
+    } else {
+      print('Unable to find any bindings.');
     }
   }
+  _NS.RegisterEvent('PLAYER_TALENT_UPDATE');
+} else if ((isClassic(interfaceVersion) || isWOTLK(interfaceVersion))) {
+  _NS.UPDATE_INSTANCE_INFO = (self: typeof _NS) => {
+    const numTabs = GetNumTalentTabs();
+    let talentString: string;
+    let mostPoints = -1;
+    let mostPointsName: string;
 
-  self.UnregisterEvent('UPDATE_INSTANCE_INFO');
-  if (_BINDINGS[talentString]) {
-    self.LoadBindings(talentString);
-  } else if (_BINDINGS[mostPointsName]) {
-    self.LoadBindings(mostPointsName);
-  } else if (next(_BINDINGS)) {
-    print('No talents found. Switching to default set.');
-    self.LoadBindings(next(_BINDINGS));
-  } else {
-    print('Unable to find any bindings.');
+    if (!numTabs) {
+      return
+    }
+
+    for (let i = 1; i <= numTabs; i++) {
+      const [name, , points] = GetTalentTabInfo(i);
+      talentString = `${(talentString && `${talentString}/` || '')}${points}`;
+
+      if (points > mostPoints) {
+        mostPoints = points;
+        mostPointsName = name;
+      }
+    }
+
+    self.UnregisterEvent('UPDATE_INSTANCE_INFO');
+    if (_BINDINGS[talentString]) {
+      self.LoadBindings(talentString);
+    } else if (_BINDINGS[mostPointsName]) {
+      self.LoadBindings(mostPointsName);
+    } else if (next(_BINDINGS)) {
+      print('No talents found. Switching to default set.');
+      self.LoadBindings(next(_BINDINGS));
+    } else {
+      print('Unable to find any bindings.');
+    }
   }
+  _NS.RegisterEvent('UPDATE_INSTANCE_INFO');
 }
-_NS.RegisterEvent('UPDATE_INSTANCE_INFO');
