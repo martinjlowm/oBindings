@@ -1,7 +1,7 @@
 ## Interface: 11302
 ## Title: oBindings
 ## Author: Haste
-## Version: 1.0
+## Version: development
 ## X-eMail: troeks@gmail.com
 ## Notes: Binding management for mad people.
 

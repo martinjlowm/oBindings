@@ -3,6 +3,7 @@
   "description": "Binding management for mad people",
   "scripts": {
     "build": "tstl -p tsconfig.json",
+    "preparePublish": "mkdir -p artifacts/dist && sed -E \"s\/^(## Version: )(.*)$\/\\1$CIRCLE_TAG\/\" oBindings.toc > artifacts/oBindings.toc && cp -R dist/ artifacts/dist/",
     "test": "pnpm run build && echo 'Not implemented yet'",
     "watch": "tstl -p tsconfig.json --watch"
   },
