@@ -30,7 +30,7 @@ jobs:
           root: .
           paths:
             - dist/
-            - oBindings.toc
+            - *.toc
 
   publish:
     docker:
