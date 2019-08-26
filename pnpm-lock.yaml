@@ -1,14 +1,15 @@
 devDependencies:
-  lua-types: 2.5.2
-  tstl: 2.2.0
+  '@types/wow-api': github.com/martinjlowm/types-wow-api/b83c58f5675e1df1936f59faab18726a38d28514
+  lua-types: 2.6.1
+  tstl: 2.2.3
   typescript: 3.5.3
   typescript-to-lua: 0.26.0
 lockfileVersion: 5
 packages:
-  /lua-types/2.5.2:
+  /lua-types/2.6.1:
     dev: true
     resolution:
-      integrity: sha512-JaVECSBG5z/BheVJOsPxEmrVDvTEnnuOlZuDHuktEWVq6+0xxq1rR3W7fJP+tKfXYtVjsZxMZhHSTd/vesP6Qw==
+      integrity: sha512-OU058Qm8cidDYz73VUPfE1gWgMrq0wjOT8XqFeeguVKQgqXjebw9bsUV2GUZ1MSmZwfdFeMjLQCVEGjT21mRKg==
   /path-parse/1.0.6:
     dev: true
     resolution:
@@ -25,10 +26,10 @@ packages:
       node: '>= 8'
     resolution:
       integrity: sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
-  /tstl/2.2.0:
+  /tstl/2.2.3:
     dev: true
     resolution:
-      integrity: sha512-gVp5Nx50cb+oaAEtO6PDvpqc2ulXkOA78Wb/szAT/ssGfnZFgjutKO0AOPo8EakMOtMb4sOrq7Ugl5LqdoxmWg==
+      integrity: sha512-YkfcuFoCfA230B/oXDo1zU6DCBhw6RW94II7X9a6ytwkrFmUtlnTDXz4OGOOD1M7+23uMD/zS1Xie9RUH+wWSg==
   /typescript-to-lua/0.26.0:
     dependencies:
       resolve: 1.12.0
@@ -47,7 +48,14 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
+  github.com/martinjlowm/types-wow-api/b83c58f5675e1df1936f59faab18726a38d28514:
+    dev: true
+    name: '@types/wow-api'
+    resolution:
+      tarball: 'https://codeload.github.com/martinjlowm/types-wow-api/tar.gz/b83c58f5675e1df1936f59faab18726a38d28514'
+    version: 1.13.2
 specifiers:
+  '@types/wow-api': 'github:martinjlowm/types-wow-api'
   lua-types: ^2.5.2
   tstl: ^2.2.0
   typescript: ^3.5.2
