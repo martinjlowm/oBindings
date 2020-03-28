@@ -1,3 +1,6 @@
-dist/
+.pnp*
+.yarn/
 artifacts/
+dist/
 node_modules/
+yarn-error.log

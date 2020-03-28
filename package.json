@@ -8,9 +8,12 @@
   },
   "devDependencies": {
     "@types/wow-api": "github:martinjlowm/types-wow-api",
-    "lua-types": "^2.5.2",
-    "tstl": "^2.2.0",
-    "typescript": "^3.5.2",
-    "typescript-to-lua": "^0.26.0"
+    "lua-types": "^2.7.0",
+    "tstl": "^2.4.2",
+    "typescript": "^3.8.3",
+    "typescript-to-lua": "^0.32.0"
+  },
+  "installConfig": {
+    "pnp": true
   }
 }
