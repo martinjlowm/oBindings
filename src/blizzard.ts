@@ -17,9 +17,9 @@ UIPARENT_MANAGED_FRAME_POSITIONS['ShapeshiftBarFrame'] = null;
 UIPARENT_MANAGED_FRAME_POSITIONS['PossessBarFrame'] = null;
 UIPARENT_MANAGED_FRAME_POSITIONS['PETACTIONBAR_YPOS'] = null;
 
-MainMenuBar.UnregisterAllEvents()
+MainMenuBar.UnregisterAllEvents();
 MainMenuBar.Show = noop;
-MainMenuBar.Hide()
+MainMenuBar.Hide();
 
 // MainMenuBarArtFrame.UnregisterEvent('PLAYER_ENTERING_WORLD')
 // MainMenuBarArtFrame.UnregisterEvent('BAG_UPDATE') // needed to display stuff on the backpack button

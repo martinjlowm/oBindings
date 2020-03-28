@@ -5,7 +5,7 @@
 const [, , , interfaceVersion] = GetBuildInfo();
 
 function isClassic(v: number) {
-  return 13020 <= v;
+  return 11300 <= v;
 }
 
 function isWOTLK(v: number) {
@@ -129,6 +129,7 @@ const createButton = (key: string | number) => {
   }
 
   const btn = CreateFrame("Button", `oBindings${key}`, _STATE, "SecureActionButtonTemplate");
+
   btn.SetAttribute('_childupdate-state-changed', `
     local type = message and self:GetAttribute('ob-' .. message .. '-type') or self:GetAttribute('ob-base-type')
 
@@ -185,7 +186,7 @@ const bindKey = (key: string | number, action: string, mod?: string | number) =>
     btn.SetAttribute('ob-%s-type'.format(mod || 'base'), ty)
     ty = ty == 'macro' ? 'macrotext' : ty;
 
-    btn.SetAttribute('ob-%s-attribute'.format(mod || 'base'), `${ty},${act.gsub('\n', '').match('^%s*(.-)%s*$')}`);
+    btn.SetAttribute('ob-%s-attribute'.format(mod || 'base'), `${ty},${act.gsub('\n', '').trim()}`);
 
     SetBindingClick(modKey || key, btn.GetName())
   }
@@ -282,7 +283,7 @@ if (isBfA(interfaceVersion)) {
   }
   _NS.RegisterEvent('PLAYER_TALENT_UPDATE');
 } else if ((isClassic(interfaceVersion) || isWOTLK(interfaceVersion))) {
-  _NS.UPDATE_INSTANCE_INFO = (self: typeof _NS) => {
+  _NS.PLAYER_ENTERING_WORLD = (self: typeof _NS) => {
     const numTabs = GetNumTalentTabs();
     let talentString: string;
     let mostPoints = -1;
@@ -302,17 +303,17 @@ if (isBfA(interfaceVersion)) {
       }
     }
 
-    self.UnregisterEvent('UPDATE_INSTANCE_INFO');
+    self.UnregisterEvent('PLAYER_ENTERING_WORLD');
     if (_BINDINGS[talentString]) {
       self.LoadBindings(talentString);
     } else if (_BINDINGS[mostPointsName]) {
       self.LoadBindings(mostPointsName);
     } else if (next(_BINDINGS)) {
       print('No talents found. Switching to default set.');
-      self.LoadBindings(next(_BINDINGS));
+      self.LoadBindings(next(_BINDINGS)[0]);
     } else {
       print('Unable to find any bindings.');
     }
   }
-  _NS.RegisterEvent('UPDATE_INSTANCE_INFO');
+  _NS.RegisterEvent('PLAYER_ENTERING_WORLD');
 }
